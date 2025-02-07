@@ -26,6 +26,7 @@ from ..types import events as platform_events
 from ..types import entities as platform_entities
 from ...utils import image
 
+person_wxid_array = ["hmyhs1314520", "st518518", "lancer3433"]
 
 class GewechatMessageConverter(adapter.MessageConverter):
     
@@ -120,7 +121,8 @@ class GewechatEventConverter(adapter.EventConverter):
                 time=event["Data"]["CreateTime"],
                 source_platform_object=event,
             )
-        elif 'wxid_' in event["Data"]["FromUserName"]["string"]:
+        elif 'wxid_' in event["Data"]["FromUserName"]["string"] or \
+            event["Data"]["FromUserName"]["string"] in person_wxid_array:
             return platform_events.FriendMessage(
                 sender=platform_entities.Friend(
                     id=event["Data"]["FromUserName"]["string"],
