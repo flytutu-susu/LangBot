@@ -61,7 +61,8 @@ class GewechatMessageConverter(adapter.MessageConverter):
 
             line_split = message["Data"]["Content"]["string"].split("\n")
 
-            if len(line_split) > 0 and regex.match(line_split[0]):
+            if len(line_split) > 0 and (regex.match(line_split[0]) or
+                    line_split[0].rstrip(":") in person_wxid_array):
                 message["Data"]["Content"]["string"] = "\n".join(line_split[1:])
 
             at_string = f'@{bot_account_id}'
